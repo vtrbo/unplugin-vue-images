@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "cross-env DEBUG=unplugin-vue-images:* vite --port 9999",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "typescript": "^5.1.6",
+    "unplugin-vue-images": "workspace:*",
+    "vite": "^4.4.7"
+  }
+}

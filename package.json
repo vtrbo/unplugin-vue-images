@@ -1,5 +1,6 @@
 {
   "name": "unplugin-vue-images",
+  "type": "module",
   "version": "0.0.1",
   "description": "Victor Bo's Unplugin Template.",
   "license": "MIT",
@@ -54,6 +55,12 @@
       "require": "./dist/types.cjs",
       "import": "./dist/types.js"
     },
+    "./types/vue": {
+      "types": "./types/vue.d.ts"
+    },
+    "./types/vue3": {
+      "types": "./types/vue3.d.ts"
+    },
     "./*": "./*"
   },
   "main": "dist/index.cjs",
@@ -68,7 +75,9 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "types",
+    "*.d.ts"
   ],
   "scripts": {
     "build": "tsup",
@@ -76,22 +85,39 @@
     "build:fix": "esno scripts/postbuild.ts",
     "lint": "eslint .",
     "play": "npm -C playground run dev",
+    "example:build": "npm -C examples/vite-vue3 run build",
+    "example:dev": "npm -C examples/vite-vue3 run dev",
     "prepublishOnly": "npm run build",
     "release": "bumpp && npm publish",
     "start": "esno src/index.ts",
     "test": "vitest"
   },
+  "peerDependencies": {
+    "@vue/compiler-sfc": "^3.0.2 || ^2.7.0"
+  },
+  "peerDependenciesMeta": {
+    "@vue/compiler-sfc": {
+      "optional": true
+    }
+  },
   "dependencies": {
+    "chokidar": "^3.5.3",
+    "debug": "^4.3.4",
+    "fast-glob": "^3.3.1",
+    "local-pkg": "^0.4.3",
     "unplugin": "^1.4.0"
   },
   "devDependencies": {
+    "@types/debug": "^4.1.8",
     "@types/node": "^20.4.5",
-    "@vtrbo/eslint-config": "^0.3.9",
+    "@vtrbo/eslint-config": "^0.3.10",
+    "@vtrbo/utils": "^0.3.6",
+    "@vue/compiler-sfc": "^3.3.4",
     "bumpp": "^9.1.1",
     "chalk": "^5.3.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.46.0",
     "esno": "^0.17.0",
-    "fast-glob": "^3.3.1",
     "nodemon": "^3.0.1",
     "rimraf": "^5.0.1",
     "rollup": "^3.27.0",
