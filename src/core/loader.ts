@@ -1,6 +1,6 @@
 import createDebugger from 'debug'
-import { DEFAULT_ALIAS, DEFAULT_PATH, UNPLUGIN_NAME } from '../constants'
 import type { ResolvedOptions } from '../types'
+import { DEFAULT_ALIAS, DEFAULT_PATH, UNPLUGIN_NAME } from './constants'
 import type { Context } from './context'
 import { compilers } from './compilers'
 

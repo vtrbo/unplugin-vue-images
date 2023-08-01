@@ -1,6 +1,6 @@
 import createDebugger from 'debug'
 import type { ResolvedOptions } from '../types'
-import { DEFAULT_ALIAS, UNPLUGIN_NAME } from '../constants'
+import { DEFAULT_ALIAS, UNPLUGIN_NAME } from './constants'
 
 const debug = createDebugger(`${UNPLUGIN_NAME}:utils`)
 
@@ -37,4 +37,16 @@ export function removeSlash(path: string) {
   if (path.endsWith('/'))
     path = path.slice(0, path.length - 1)
   return path
+}
+
+export function pathsEqual(oldPaths: string[], newPaths: string[]) {
+  if (oldPaths.length !== newPaths.length)
+    return false
+
+  for (let i = 0; i < oldPaths.length; i++) {
+    if (!oldPaths[i].includes(newPaths[i]))
+      return false
+  }
+
+  return true
 }

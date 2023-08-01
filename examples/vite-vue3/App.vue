@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import Account from '~images:others/account.png'
+import AccountP from '~images:others/account.png'
 import AccountS from '~images/account.svg'
 import Password from '~images:normal/password.png'
 import OA from '~images:others/account.png'
@@ -11,7 +11,10 @@ import Test2Password from '~images/test/test/password.png?gif&width=100&height=1
 
 <template>
   <div>
-    <Account width="150" @click="() => console.log('on click')" />
+    <account />
+    <account-png />
+    <normal-account />
+    <AccountP width="150" @click="() => console.log('on click')" />
     <AccountS />
     <OA />
     <Password />

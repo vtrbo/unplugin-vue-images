@@ -3,7 +3,7 @@ import chokidar from 'chokidar'
 import createDebugger from 'debug'
 import type { ResolvedConfig, ViteDevServer } from 'vite'
 import type { Options } from './types'
-import { UNPLUGIN_NAME } from './constants'
+import { UNPLUGIN_NAME } from './core/constants'
 import { generateComponentFromPath, generateImagePath, isImagePath, normalizeImagePath } from './core/loader'
 import { Context } from './core/context'
 

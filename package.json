@@ -55,11 +55,10 @@
       "require": "./dist/types.cjs",
       "import": "./dist/types.js"
     },
-    "./types/vue": {
-      "types": "./types/vue.d.ts"
-    },
-    "./types/vue3": {
-      "types": "./types/vue3.d.ts"
+    "./resolver": {
+      "types": "./dist/resolver.d.ts",
+      "require": "./dist/resolver.cjs",
+      "import": "./dist/resolver.js"
     },
     "./*": "./*"
   },

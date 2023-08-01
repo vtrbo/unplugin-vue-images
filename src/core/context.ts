@@ -6,7 +6,7 @@ import type { ViteDevServer } from 'vite'
 import { ensurePrefix, toCamelCase } from '@vtrbo/utils/string'
 import createDebugger from 'debug'
 import type { Options, ResolvedOptions } from '../types'
-import { UNPLUGIN_NAME } from '../constants'
+import { UNPLUGIN_NAME } from './constants'
 import { resolveOptions } from './options'
 import { getAlias, getName } from './utils'
 
@@ -200,9 +200,11 @@ export class Context {
   setupWatcher(watcher: fs.FSWatcher) {
     watcher
       .on('add', (path) => {
+        debug('setupWatcher add path =>', path)
         this.addImage(path)
       })
       .on('unlink', (path) => {
+        debug('setupWatcher unlink path =>', path)
         this.delImage(path)
       })
   }

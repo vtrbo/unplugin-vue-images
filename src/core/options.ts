@@ -1,7 +1,7 @@
 import { isArray, isObject, isString } from '@vtrbo/utils/fn'
 import createDebugger from 'debug'
 import type { Dir, Options, ResolvedOptions } from '../types'
-import { DEFAULT_ALIAS, DEFAULT_EXTENSIONS, DEFAULT_PATH, UNPLUGIN_NAME } from '../constants'
+import { DEFAULT_ALIAS, DEFAULT_EXTENSIONS, DEFAULT_PATH, UNPLUGIN_NAME } from './constants'
 import { removeSlash } from './utils'
 
 const debug = createDebugger(`${UNPLUGIN_NAME}:options`)
