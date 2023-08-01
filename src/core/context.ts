@@ -36,6 +36,97 @@ export class Context {
     this.options = resolveOptions(rawOptions)
   }
 
+  collectImage(path: string) {
+    const alias = getAlias(path, this.options)
+    const camelCaseAlias = toCamelCase(alias, true)
+
+    const name = getName(path, this.options)
+    const camelCaseName = toCamelCase(name, true)
+
+    let aliasImages = new Map<string, Image[]>()
+    if (this._images.has(camelCaseAlias)) {
+      const cacheAliasImages = this._images.get(camelCaseAlias)
+      if (cacheAliasImages)
+        aliasImages = cacheAliasImages
+    }
+
+    const ext = parse(`/${path}`).ext.slice(1)
+
+    aliasImages.set(camelCaseName, [
+      ...(aliasImages.get(camelCaseName) || []),
+      {
+        file: ensurePrefix(path, '/'),
+        alias,
+        name,
+        ext,
+      },
+    ])
+
+    this._images.set(camelCaseAlias, aliasImages)
+  }
+
+  addImage(path: string) {
+    if (!this._server)
+      return
+
+    const rootIndex = path.indexOf(this.root)
+    if (rootIndex === -1)
+      return
+
+    path = path.slice(rootIndex + this.root.length + 1)
+
+    const ext = parse(`/${path}`).ext.slice(1)
+    if (!this.options.extensions.includes(ext))
+      return
+
+    this.collectImage(path)
+  }
+
+  delImage(path: string) {
+    if (!this._server)
+      return
+
+    const rootIndex = path.indexOf(this.root)
+    if (rootIndex === -1)
+      return
+
+    path = path.slice(rootIndex + this.root.length + 1)
+
+    const ext = parse(`/${path}`).ext.slice(1)
+    if (!this.options.extensions.includes(ext))
+      return
+
+    const alias = getAlias(path, this.options)
+    const camelCaseAlias = toCamelCase(alias, true)
+
+    if (!this._images.has(camelCaseAlias))
+      return
+
+    const aliasImages = this._images.get(camelCaseAlias)
+    if (!aliasImages)
+      return
+
+    const name = getName(path, this.options)
+    const camelCaseName = toCamelCase(name, true)
+
+    if (!aliasImages.has(camelCaseName))
+      return
+
+    const nameImages = aliasImages.get(camelCaseName)
+    if (!nameImages)
+      return
+
+    const imageIndex = nameImages.findIndex(image => image.name === name && image.ext === ext)
+    if (imageIndex === -1)
+      return
+
+    nameImages.splice(imageIndex, 1)
+
+    aliasImages.set(camelCaseName, nameImages)
+
+    this._images.set(camelCaseAlias, aliasImages)
+  }
+
   searchImages() {
     if (this._searched)
       return
@@ -49,40 +140,15 @@ export class Context {
       onlyFiles: true,
       cwd: this.root,
     })
+
     debug('searchImages imageFiles =>', imageFiles)
 
-    for (const imageFile of imageFiles) {
-      const alias = getAlias(imageFile, this.options)
-      const camelCaseAlias = toCamelCase(alias, true)
+    for (const imageFile of imageFiles)
+      this.collectImage(imageFile)
 
-      const name = getName(imageFile, this.options)
-      const camelCaseName = toCamelCase(name, true)
+    debug('searchImages images =>', this._images)
 
-      let nameMap = new Map<string, Image[]>()
-      if (this._images.has(camelCaseAlias)) {
-        const cacheNameMap = this._images.get(camelCaseAlias)
-        if (cacheNameMap)
-          nameMap = cacheNameMap
-      }
-
-      const ext = parse(`/${imageFile}`).ext.slice(1)
-
-      nameMap.set(camelCaseName, [
-        ...(nameMap.get(camelCaseName) || []),
-        {
-          file: ensurePrefix(imageFile, '/'),
-          alias,
-          name,
-          ext,
-        },
-      ])
-      debug('searchImages nameMap =>', nameMap)
-
-      this._images.set(camelCaseAlias, nameMap)
-      debug('searchImages this._images =>', this._images)
-
-      this._searched = true
-    }
+    this._searched = true
   }
 
   searchImage(alias: string, name: string, extension: string) {
@@ -130,10 +196,10 @@ export class Context {
   setupWatcher(watcher: fs.FSWatcher) {
     watcher
       .on('add', (path) => {
-        debug('setupWatcher add path =>', path)
+        this.addImage(path)
       })
       .on('unlink', (path) => {
-        debug('setupWatcher unlink path =>', path)
+        this.delImage(path)
       })
   }
 }
