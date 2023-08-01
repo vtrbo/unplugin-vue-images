@@ -1,7 +1,7 @@
 import { isArray, isObject, isString } from '@vtrbo/utils/fn'
 import createDebugger from 'debug'
 import type { Dir, Options, ResolvedOptions } from '../types'
-import { DEFAULT_ALIAS, DEFAULT_PATH, UNPLUGIN_NAME } from '../constants'
+import { DEFAULT_ALIAS, DEFAULT_EXTENSIONS, DEFAULT_PATH, UNPLUGIN_NAME } from '../constants'
 import { removeSlash } from './utils'
 
 const debug = createDebugger(`${UNPLUGIN_NAME}:options`)
@@ -49,7 +49,7 @@ export function resolveOptions(options: Options): ResolvedOptions {
     path: removeSlash(DEFAULT_PATH),
   })
 
-  const extensions = options?.extensions || ['jpg', 'jpeg', 'png', 'svg', 'webp', 'gif']
+  const extensions = options?.extensions || DEFAULT_EXTENSIONS
 
   const compiler = options?.compiler || 'vue3'
 

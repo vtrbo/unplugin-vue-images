@@ -92,14 +92,6 @@
     "start": "esno src/index.ts",
     "test": "vitest"
   },
-  "peerDependencies": {
-    "@vue/compiler-sfc": "^3.0.2 || ^2.7.0"
-  },
-  "peerDependenciesMeta": {
-    "@vue/compiler-sfc": {
-      "optional": true
-    }
-  },
   "dependencies": {
     "chokidar": "^3.5.3",
     "debug": "^4.3.4",
