@@ -44,10 +44,14 @@ export function resolveOptions(options: Options): ResolvedOptions {
     }
   }
 
-  dirs.push({
-    alias: DEFAULT_ALIAS,
-    path: removeSlash(DEFAULT_PATH),
-  })
+  if (!dirs.length) {
+    dirs.push({
+      alias: DEFAULT_ALIAS,
+      path: removeSlash(DEFAULT_PATH),
+    })
+  }
+
+  debug('resolveOptions dirs =>', dirs)
 
   const extensions = options?.extensions || DEFAULT_EXTENSIONS
 

@@ -19,7 +19,7 @@ const config: UserConfig = {
     Components({
       resolvers: [
         (name: string) => {
-          debug('name =>', name)
+          // debug('name =>', name)
           const dirs = [{ alias: 'normal', path: 'src/assets/images' }, { alias: 'others', path: 'src/assets/others' }]
           const extensions = ['jpg', 'jpeg', 'png', 'svg', 'gif', 'webp'].join(',')
           const globs = dirs.map(dir => `${dir.path}/**/*.{${extensions}}`)
@@ -28,7 +28,7 @@ const config: UserConfig = {
             onlyFiles: true,
             cwd: process.cwd(),
           })
-          debug('files => ', files)
+          // debug('files => ', files)
           return ''
         },
       ],

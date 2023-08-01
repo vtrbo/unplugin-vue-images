@@ -4,7 +4,7 @@ import { DEFAULT_ALIAS, UNPLUGIN_NAME } from '../constants'
 
 const debug = createDebugger(`${UNPLUGIN_NAME}:utils`)
 
-export function getImageName(path: string, options: ResolvedOptions) {
+export function getName(path: string, options: ResolvedOptions) {
   let name = ''
   for (const dir of options.dirs) {
     if (path.startsWith(dir.path)) {

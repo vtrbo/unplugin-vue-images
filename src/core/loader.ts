@@ -1,7 +1,10 @@
-import { DEFAULT_ALIAS, DEFAULT_PATH } from '../constants'
+import createDebugger from 'debug'
+import { DEFAULT_ALIAS, DEFAULT_PATH, UNPLUGIN_NAME } from '../constants'
 import type { ResolvedOptions } from '../types'
-import type { Context, Image } from './context'
+import type { Context } from './context'
 import { compilers } from './compilers'
+
+const debug = createDebugger(`${UNPLUGIN_NAME}:loader`)
 
 const URL_PREFIXES = [
   '/~images/',
@@ -113,31 +116,12 @@ export function resolveImagePath(imagePath: string, options: ResolvedOptions): R
   }
 }
 
-export async function generateComponent(resolved: ResolvedImagePath, options: ResolvedOptions, context: Context) {
-  let images = context.searchByName(resolved.name)
-  if (!images)
-    throw new Error('Cannot find images')
+export function generateComponent(resolved: ResolvedImagePath, options: ResolvedOptions, context: Context) {
+  const image = context.searchImage(resolved.alias, resolved.name, resolved.ext)
+  debug('generateComponent image =>', image)
 
-  images = images.filter(image => image.alias === resolved.alias)
-  if (!images.length)
-    throw new Error('Cannot find image')
-
-  let image: Image
-
-  if (images.length === 1) {
-    image = images[0]
-  }
-  else {
-    if (resolved.ext) {
-      const tmpImage = images.find(image => image.ext === resolved.ext)
-      if (!tmpImage)
-        throw new Error('Cannot find image')
-      image = tmpImage
-    }
-    else {
-      throw new Error('Cannot find image')
-    }
-  }
+  if (!image)
+    return null
 
   return compilers[options.compiler](image, resolved)
 }
@@ -146,5 +130,6 @@ export function generateComponentFromPath(path: string, options: ResolvedOptions
   const resolved = resolveImagePath(path, options)
   if (!resolved)
     return null
+  debug('generateComponentFromPath resolved =>', resolved)
   return generateComponent(resolved, options, context)
 }
