@@ -146,7 +146,11 @@ export class Context {
     for (const imageFile of imageFiles)
       this.collectImage(imageFile)
 
-    debug('searchImages images =>', this._images)
+    if (debug.enabled) {
+      this._images.forEach((value, key) => {
+        debug(`searchImages images ${key} =>`, value)
+      })
+    }
 
     this._searched = true
   }
