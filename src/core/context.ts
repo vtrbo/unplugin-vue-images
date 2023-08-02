@@ -141,16 +141,10 @@ export class Context {
       cwd: this.root,
     })
 
-    debug('searchImages imageFiles =>', imageFiles)
+    debug('image files =>', imageFiles)
 
     for (const imageFile of imageFiles)
       this.collectImage(imageFile)
-
-    if (debug.enabled) {
-      this._images.forEach((value, key) => {
-        debug(`searchImages images ${key} =>`, value)
-      })
-    }
 
     this._searched = true
   }
@@ -169,15 +163,16 @@ export class Context {
     if (!nameImages || !nameImages.length)
       return null
 
-    debug('searchImage nameImages =>', nameImages)
-
-    if (!extension)
+    if (!extension) {
+      debug('image =>', nameImages[0])
       return nameImages[0]
+    }
 
     const extImage = nameImages.find(image => image.ext === extension)
     if (!extImage)
       return null // TODO 这里当后缀无法匹配的时候，是不是可以考虑返回第一个
 
+    debug('image =>', extImage)
     return extImage
   }
 
@@ -200,11 +195,11 @@ export class Context {
   setupWatcher(watcher: fs.FSWatcher) {
     watcher
       .on('add', (path) => {
-        debug('setupWatcher add path =>', path)
+        debug('add path =>', path)
         this.addImage(path)
       })
       .on('unlink', (path) => {
-        debug('setupWatcher unlink path =>', path)
+        debug('unlink path =>', path)
         this.delImage(path)
       })
   }

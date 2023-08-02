@@ -118,10 +118,10 @@ export function resolveImagePath(imagePath: string, options: ResolvedOptions): R
 
 export function generateComponent(resolved: ResolvedImagePath, options: ResolvedOptions, context: Context) {
   const image = context.searchImage(resolved.alias, resolved.name, resolved.ext)
-  debug('generateComponent image =>', image)
-
   if (!image)
     return null
+
+  debug('search image =>', image)
 
   return compilers[options.compiler](image, resolved)
 }
@@ -130,6 +130,8 @@ export function generateComponentFromPath(path: string, options: ResolvedOptions
   const resolved = resolveImagePath(path, options)
   if (!resolved)
     return null
-  debug('generateComponentFromPath resolved =>', resolved)
+
+  debug('resolved options =>', resolved)
+
   return generateComponent(resolved, options, context)
 }

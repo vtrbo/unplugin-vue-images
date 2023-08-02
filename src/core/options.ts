@@ -51,11 +51,11 @@ export function resolveOptions(options: Options): ResolvedOptions {
     })
   }
 
-  debug('resolveOptions dirs =>', dirs)
-
   const extensions = options?.extensions || DEFAULT_EXTENSIONS
 
   const compiler = options?.compiler || 'vue3'
+
+  debug('unplugin options =>', { dirs, extensions, compiler })
 
   return {
     dirs,

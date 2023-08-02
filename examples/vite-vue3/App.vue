@@ -11,7 +11,7 @@ import Test2Password from '~images/test/test/password.png?gif&width=100&height=1
 
 <template>
   <div>
-    <account />
+    <account-svg />
     <account-png />
     <normal-account />
     <AccountP width="150" @click="() => console.log('on click')" />

@@ -78,3 +78,6 @@ dist
 # IDE
 .idea
 .vscode
+
+# generate
+**/components.d.ts

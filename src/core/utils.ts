@@ -1,10 +1,8 @@
-import createDebugger from 'debug'
 import type { ResolvedOptions } from '../types'
-import { DEFAULT_ALIAS, UNPLUGIN_NAME } from './constants'
+import { DEFAULT_ALIAS } from './constants'
+import type { ResolvedImagesResolverOptions } from './content'
 
-const debug = createDebugger(`${UNPLUGIN_NAME}:utils`)
-
-export function getName(path: string, options: ResolvedOptions) {
+export function getName(path: string, options: ResolvedOptions | ResolvedImagesResolverOptions) {
   let name = ''
   for (const dir of options.dirs) {
     if (path.startsWith(dir.path)) {
@@ -20,7 +18,7 @@ export function getName(path: string, options: ResolvedOptions) {
   return name
 }
 
-export function getAlias(path: string, options: ResolvedOptions) {
+export function getAlias(path: string, options: ResolvedOptions | ResolvedImagesResolverOptions) {
   let alias = DEFAULT_ALIAS
   for (const dir of options.dirs) {
     if (path.startsWith(dir.path)) {
@@ -49,4 +47,21 @@ export function pathsEqual(oldPaths: string[], newPaths: string[]) {
   }
 
   return true
+}
+
+export function getNames(prefix: string, alias: string, name: string, extension: string): string[] {
+  return [
+    `${prefix}-${alias}-${name}-${extension}`,
+    `${prefix}-${alias}-${name}`,
+
+    `${prefix}-${name}-${extension}`,
+    `${prefix}-${name}`,
+
+    `${alias}-${name}-${extension}`,
+    `${alias}-${name}`,
+
+    `${name}-${extension}`,
+
+    name,
+  ]
 }

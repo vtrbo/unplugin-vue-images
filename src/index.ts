@@ -42,7 +42,7 @@ const unplugin = createUnplugin<Options>((options = {}) => {
         ctx.searchImages()
 
         if (config.build.watch && config.command === 'build')
-          ctx.setupWatcher(chokidar.watch(ctx.options.dirs.map(m => m.path)))
+          ctx.setupWatcher(chokidar.watch(ctx.options.dirs.map(dir => dir.path)))
       },
       configureServer(server: ViteDevServer) {
         ctx.setupViteServer(server)
