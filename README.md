@@ -2,33 +2,7 @@
 
 [![NPM version](https://img.shields.io/npm/v/unplugin-vue-images?color=a1b858&label=)](https://www.npmjs.com/package/unplugin-vue-images)
 
-unplugin-vue-images for [unplugin](https://github.com/unjs/unplugin).
-
-## Template Usage
-
-> example use [@vtrbo/cli](https://github.com/vtrbo/cli)  
->
-> example use [@vtrbo/ni](https://github.com/vtrbo/ni)  
-
-Clone this template
-
-```bash
-vtr
-# select Unplugin
-
-# or
-# vtr vtrbo/starter-unplugin my-plugin
-```
-
-Globally replace `unplugin-vue-images` with your plugin name.  
-
-Globally replace `VueImages` with your plugin name (big camel case).  
-
-Then you can start developing your plugin.  
-
-To test your plugin, run `nr dev`.  
-
-To release your plugin, run `nr release`.  
+Use the image resource as a component in the vue project.
 
 ## Install
 
@@ -125,6 +99,131 @@ build({
 ```
 
 <br></details>
+
+## Usage
+
+You can learn more by looking at the examples.  
+[`vite-vue2`](https://github.com/vtrbo/unplugin-vue-images/tree/main/examples/vite-vue2)  
+[`vite-vue3`](https://github.com/vtrbo/unplugin-vue-images/tree/main/examples/vite-vue3)  
+
+### Without
+
+```vue
+<script>
+import ImageUrl from '@/assets/image.png'
+</script>
+
+<template>
+  <img :src="ImageUrl" width="120" height="120">
+</template>
+```
+
+### With
+
+```vue
+<script>
+import Image from '~images/image.png?width=120&height=120'
+</script>
+
+<template>
+  <Image />
+</template>
+```
+
+> **Note**  
+> By default this plugin will import images in the `src/assets/images` path. You can customize it using the `dirs` option.  
+> Import rule is `~images[:alias]/filename[.extension][?attrs]`, So you have the flexibility to import your image resources.
+
+## Configuration
+
+```ts
+VueImages({
+  // search images dirs
+  // default 'src/assets/images'
+  dirs: [
+    // 'src/assets/images',
+    // { icons: 'src/assets/icons' }
+  ],
+
+  // search images extensions
+  // default ['jpg', 'jpeg', 'png', 'svg', 'webp', 'gif']
+  extensions: [],
+
+  // generate vue component version
+  // support 'vue2' | 'vue3'
+  // default 'vue3'
+  compiler: 'vue3'
+})
+```
+
+## Support [`unplugin-vue-components`](https://github.com/antfu/unplugin-vue-components)
+
+### config
+
+```ts
+// `vite.config.ts`
+
+import type { UserConfig } from 'vite'
+import Vue from '@vitejs/plugin-vue'
+import Components from 'unplugin-vue-components/vite'
+import VueImages from 'unplugin-vue-images/vite'
+import { ImagesResolver } from 'unplugin-vue-images/resolver'
+
+const collectionDirs = [
+  'src/assets/images',
+  { icons: 'src/assets/icons' },
+]
+
+const extensions = ['jpg', 'jpeg', 'png', 'svg', 'webp', 'gif']
+
+const config: UserConfig = {
+  plugins: [
+    Vue(),
+    VueImages({
+      dirs: collectionDirs,
+      extensions,
+      compiler: 'vue3',
+    }),
+    Components({
+      resolvers: [
+        ImagesResolver({
+          // Components Prefix
+          // Only those starting with prefix will be imported automatically
+          // Set to false or '' disabled
+          // default: 'img'
+          prefix: 'img',
+
+          // The dirs must be the same as those in plugins
+          // default: 'src/assets/images'
+          dirs: collectionDirs,
+
+          // The extensions must be the same as those in plugins
+          // default: ['jpg', 'jpeg', 'png', 'svg', 'webp', 'gif']
+          extensions,
+        }),
+      ],
+    }),
+  ],
+}
+
+export default config
+```
+
+### usage
+
+```vue
+<template>
+  <div>
+    <img-account />
+    <img-normal-password-png />
+    <img-icons-name />
+  </div>
+</template>
+```
+
+> **Note**  
+> By default this plugin will import images in the `src/assets/images` path. You can customize it using the `dirs` option.  
+> Usage rule is `[prefix-][alias-]name[-extension]`, So you have the flexibility to usage generate components.
 
 ## License
 
