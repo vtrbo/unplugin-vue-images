@@ -6,7 +6,7 @@ import { ImagesResolver } from 'unplugin-vue-images/resolver'
 
 const collectionDirs = [
   'src/assets/images',
-  { others: 'src/assets/others' },
+  { svg: 'src/assets/svg' },
 ]
 
 const config: UserConfig = {

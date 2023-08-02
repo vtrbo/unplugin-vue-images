@@ -1,27 +1,16 @@
 <script lang="ts" setup>
-import AccountP from '~images:others/account.png'
-import AccountS from '~images/account.svg'
-import Password from '~images:normal/password.png'
-import OA from '~images:others/account.png'
-import TestAccount from '~images/test-account?png'
-import TestPassword from '~images/test/password.png?width=100'
-import Test2Account from '~images:normal/test-test-account?png&height=100'
-import Test2Password from '~images/test/test/password.png?gif&width=100&height=100'
+import Jpeg from '~images:svg/icons/jpeg.svg?width=80&height=60'
 </script>
 
 <template>
   <div>
-    <account-svg />
-    <account-png />
-    <normal-account />
-    <AccountP width="150" @click="() => console.log('on click')" />
-    <AccountS />
-    <OA />
-    <Password />
-    <TestAccount />
-    <TestPassword />
-    <Test2Account />
-    <Test2Password />
+    <Jpeg />
+    <png />
+    <png-svg />
+    <svg-png />
+    <svg-png-svg width="100" />
+    <icons-svg />
+    <svg-icons-gif />
   </div>
 </template>
 
