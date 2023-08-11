@@ -1,7 +1,7 @@
 {
   "name": "unplugin-vue-images",
   "type": "module",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Victor Bo's Unplugin Template.",
   "license": "MIT",
   "homepage": "https://github.com/vtrbo/unplugin-vue-images#readme",
