@@ -177,7 +177,7 @@ export class Content {
 
 export function resolveOptions(options: ImagesResolverOptions = {}): ResolvedImagesResolverOptions {
   const rawPrefix = options.prefix ?? DEFAULT_PREFIX
-  const prefix = rawPrefix ? `${toLinesCase(rawPrefix)}-` : ''
+  const prefix = rawPrefix ? toLinesCase(rawPrefix) : ''
 
   const dirs: Dir[] = []
 
