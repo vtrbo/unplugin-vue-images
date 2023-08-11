@@ -21,15 +21,15 @@ export function ImagesResolver(options: ImagesResolverOptions = {}) {
   return (name: string) => {
     const lineName = toLinesCase(name)
     debug('name =>', name, lineName)
-    debug('options =>', options)
+    debug('resolved options =>', content.options)
 
-    if (content.options.prefix && lineName.startsWith(ensureSuffix(content.options.prefix, '-')))
+    if (content.options.prefix && !lineName.startsWith(ensureSuffix(content.options.prefix, '-')))
       return
 
     const image = content.searchImage(lineName)
     if (!image)
       return
-    debug('image =>', image)
+    debug('searched image =>', image)
 
     const resolverPath = `~images:${image.alias}/${image.name}?${image.ext}`
     debug('component path =>', resolverPath)
