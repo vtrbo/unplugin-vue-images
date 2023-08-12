@@ -5,13 +5,13 @@
     "build": "vite build"
   },
   "dependencies": {
-    "vue": "^2.7.14"
+    "vue": "^3.3.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue2": "^2.2.0",
     "typescript": "^5.1.6",
     "unplugin-vue-components": "^0.25.1",
     "unplugin-vue-images": "workspace:*",
-    "vite": "^4.4.7"
+    "vite": "^4.4.9"
   }
 }

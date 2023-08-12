@@ -15,20 +15,14 @@ const unplugin = createUnplugin<Options>((options = {}) => {
   return {
     name: UNPLUGIN_NAME,
     enforce: 'pre',
-    resolveId(id) {
-      if (isImagePath(id)) {
-        const generateId = generateImagePath(normalizeImagePath(id))
-        debug('resolve id =>', generateId)
-        return generateId
-      }
-      return null
-    },
     loadInclude(id) {
       return isImagePath(id)
     },
     load(id) {
       if (isImagePath(id)) {
         debug('load id =>', id)
+        id = generateImagePath(normalizeImagePath(id))
+        debug('resolved id =>', id)
         const config = ctx.options
         debug('load config =>', config)
         return generateComponentFromPath(id, config, ctx)
